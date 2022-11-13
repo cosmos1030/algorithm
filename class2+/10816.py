@@ -1,3 +1,5 @@
+# 딕셔너리 자료형에 익숙해지기!
+
 n = int(input())
 cards = list(map(int, input().split()))
 m = int(input())
