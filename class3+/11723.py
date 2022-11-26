@@ -1,15 +1,16 @@
 import sys
 
-myset = set([])
+myset = set()
 m = int(sys.stdin.readline().strip())
 for i in range(m):
-    order = list(map(str, sys.stdin.readline().strip().split()))
+    order = sys.stdin.readline().strip().split()
+    print(type(order))
     if len(order) == 1:
         a = order[0]
-        if a == 'all':
-            myset = set([i for i in range(1, 21)])
-        else:
+        if a == 'empty':
             myset.clear()
+        else:
+            myset = set([i for i in range(1, 21)])
         continue
     else:
         a, b = order[0], order[1]
