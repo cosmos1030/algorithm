@@ -11,22 +11,17 @@ for i in range(m):
         graph[v].append(u)
 
 queue = deque()
-not_visited = set([i for i in range(1, n+1)])
+visited = set()
 cnt = 0
-next = 1
 
-while 1:
-    queue = deque([next])
-    while queue:
-        temp = queue.popleft()
-        for i in graph[temp]:
-            if i in not_visited:
-                queue.append(i)
-                not_visited.remove(i)
-    cnt += 1
-    if len(not_visited)==0:
-        break
-    else:
-        next = not_visited.pop()
-
+for i in range(1, n+1):
+    if i not in visited:
+        queue = deque([i])
+        while queue:
+            temp = queue.popleft()
+            for i in graph[temp]:
+                if i not in visited:
+                    queue.append(i)
+                    visited.add(i)
+        cnt += 1
 print(cnt)
