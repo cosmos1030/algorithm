@@ -1,27 +1,12 @@
 n = int(input())
 
-set1 = set([i**2 for i in range(1, 224)])
-# print(len(set1))
-set2 = set()
-for i in set1:
-    for j in set1:
-        sum = i+j
-        if sum <= 50000:
-            set2.add(sum)
-# print(len(set2))
-set3 = set()
-for i in set1:
-    for j in set2:
-        sum = i+j
-        if sum <= 50000:
-            set3.add(sum)
-# print(len(set3))
-
-if n in set1:
-    print(1)
-elif n in set2:
-    print(2)
-elif n in set3:
-    print(3)
-else:
-    print(4)
+dp = [0 for i in range(n+1)]
+dp[1] = 1
+for i in range(2, n+1):
+    min = 1234567891
+    k = int(i**0.5)
+    for j in range(1, k+1):
+        if dp[i-j**2]<min:
+            min = dp[i-j**2]
+    dp[i] = (min+1)
+print(dp[n])
