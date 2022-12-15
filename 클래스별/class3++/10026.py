@@ -29,7 +29,7 @@ for i in range(n):
                     if x >=0 and x<n and y >=0 and y<n and (visited[x][y]==False) and (paint[x][y]==color):
                         visited[x][y] = True
                         queue.append([x,y])
-print(result)
+print(result, end=" ")
 
 visited = [[False for _ in range(n)] for _ in range(n)]
 result = 0
@@ -39,7 +39,7 @@ for i in range(n):
         queue = deque()
         if visited[i][j] == False:
             result += 1
-            color = paint[i][j]
+            color = 'R' if paint[i][j] == 'G' else paint[i][j]
             queue.append([i,j])
             visited[i][j] = True
             while queue:
@@ -47,7 +47,7 @@ for i in range(n):
                 for k in range(4):
                     x = temp[0] + dx[k]
                     y = temp[1] + dy[k]
-                    if x >=0 and x<n and y >=0 and y<n and (visited[x][y]==False) and (paint[x][y]==color):
+                    if x >=0 and x<n and y >=0 and y<n and (visited[x][y]==False) and (('R' if paint[x][y] == 'G' else paint[x][y])==color):
                         visited[x][y] = True
                         queue.append([x,y])
 print(result)
