@@ -3,44 +3,20 @@ from collections import deque
 input = sys.stdin.readline
 
 n = int(input())
-graph = []
+max_a, max_b, max_c = 0, 0, 0
+min_a, min_b, min_c = 0, 0, 0
 for i in range(n):
-    templist = list(map(int, input().split()))
-    graph.append(templist)
-# print(graph)
-
-dp1 = [[0]*n for i in range(n)]
-dp1[0] = graph[0]
-
-for i in range(1, n):
-    for j in range(0, n):
-        if 0<=j-1<n:
-            if 0<=j+1<n: 
-                dp1[i][j] = max(dp1[i-1][j-1], dp1[i-1][j], dp1[i-1][j+1]) + graph[i][j]
-            else:
-                dp1[i][j] = max(dp1[i-1][j-1], dp1[i-1][j]) + graph[i][j]
-        else:
-            if 0<=j+1<n: 
-                dp1[i][j] = max(dp1[i-1][j], dp1[i-1][j+1]) + graph[i][j]
-            else:
-                dp1[i][j] = dp1[i-1][j] + graph[i][j]
-
-print(max(dp1[n-1]), end=" ")
-
-dp2 = [[0]*n for i in range(n)]
-dp2[0] = graph[0]
-
-for i in range(1, n):
-    for j in range(0, n):
-        if 0<=j-1<n:
-            if 0<=j+1<n: 
-                dp2[i][j] = min(dp2[i-1][j-1], dp2[i-1][j], dp2[i-1][j+1]) + graph[i][j]
-            else:
-                dp2[i][j] = min(dp2[i-1][j-1], dp2[i-1][j]) + graph[i][j]
-        else:
-            if 0<=j+1<n: 
-                dp2[i][j] = min(dp2[i-1][j], dp2[i-1][j+1]) + graph[i][j]
-            else:
-                dp2[i][j] = dp2[i-1][j] + graph[i][j]
-
-print(min(dp2[n-1]))
+    a,b,c = map(int, input().split())
+    a1 = a+ max_a
+    b1 = b+max_b
+    c1= c+max_c
+    max_a = max(a1,b1)
+    max_b = max(a1,b1,c1)
+    max_c = max(b1,c1)
+    a2=a+ min_a
+    b2=b+ min_b
+    c2=c+ min_c
+    min_a = min(a2,b2)
+    min_b = min(a2,b2,c2)
+    min_c = min(b2,c2)
+print(max(max_a,max_b, max_c), min(min_a, min_b, min_c))
