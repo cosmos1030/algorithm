@@ -22,15 +22,28 @@ while queue:
     for i in range(4):
         movex, movey = tempx+dx[i], tempy+dy[i]
         if 0<=movex<n and 0<=movey<m:
-            if graph[movex][movey][0] == '0':
-                graph[movex][movey][0] = graph[tempx][tempy][0]+1
-                graph[movex][movey][1] = graph[tempx][tempy][1]
-                queue.append([movex, movey])
-            if graph[movex][movey][0] == '1' and graph[tempx][tempy][1] == False:
-                graph[movex][movey][0] = graph[tempx][tempy][0]+1
-                graph[movex][movey][1] = True
-                queue.append([movex, movey])
-if graph[n-1][m-1][0] == '0':
+            if graph[tempx][tempy][1] == False:
+                if graph[movex][movey][0] == '0':
+                    graph[movex][movey][0] = graph[tempx][tempy][0]+1
+                    queue.append([movex, movey])
+                if graph[movex][movey][0] == '1':
+                    graph[movex][movey][0] = False
+                    graph[movex][movey][1] = graph[tempx][tempy][0]+1
+                    queue.append([movex, movey])
+            else:
+                if graph[movex][movey][0]=='0':
+                    if graph[tempx][tempy][0]!= False and graph[tempx][tempy][0]!= '0':
+                        print(tempx,tempy)
+                        print(graph[tempx][tempy])
+                        graph[movex][movey][0] = graph[tempx][tempy][0]+1
+                    graph[movex][movey][1] = graph[tempx][tempy][1]+1
+                    queue.append([movex, movey])
+                if graph[movex][movey][0]=='1':
+                    
+if graph[n-1][m-1] == ['0', False]:
     print(-1)
+    print(graph)
+elif graph[n-1][m-1][0] == '0':
+    print(graph[n-1][m-1][1])
 else:
     print(graph[n-1][m-1][0])
