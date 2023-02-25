@@ -7,43 +7,41 @@ n,m= map(int, input().split())
 graph = []
 for i in range(n):
     temp = list(input().strip())
-    for j in range(m):
-        temp[j] = [temp[j], False]
     graph.append(temp)
-# print(graph)
+
+dp = [[[0,0]]*m for i in range(n)]
+dp[0][0] = [1, 0]
 
 queue = deque()
 queue.append([0,0])
-graph[0][0] = [1, False]
-dx= [0,0,1,-1]
+
+dx = [0,0,1,-1]
 dy = [1,-1,0,0]
+
 while queue:
     tempx, tempy = queue.popleft()
     for i in range(4):
-        movex, movey = tempx+dx[i], tempy+dy[i]
-        if 0<=movex<n and 0<=movey<m:
-            if graph[tempx][tempy][1] == False:
-                if graph[movex][movey][0] == '0':
-                    graph[movex][movey][0] = graph[tempx][tempy][0]+1
-                    queue.append([movex, movey])
-                if graph[movex][movey][0] == '1':
-                    graph[movex][movey][0] = False
-                    graph[movex][movey][1] = graph[tempx][tempy][0]+1
-                    queue.append([movex, movey])
-            else:
-                if graph[movex][movey][0]=='0':
-                    if graph[tempx][tempy][0]!= False and graph[tempx][tempy][0]!= '0':
-                        print(tempx,tempy)
-                        print(graph[tempx][tempy])
-                        graph[movex][movey][0] = graph[tempx][tempy][0]+1
-                    graph[movex][movey][1] = graph[tempx][tempy][1]+1
-                    queue.append([movex, movey])
-                if graph[movex][movey][0]=='1':
-                    
-if graph[n-1][m-1] == ['0', False]:
+        x = tempx+dx[i]
+        y = tempy+dy[i]
+        if 0<=x<n and 0<=y<m:
+            if graph[x][y] == '0':
+                if dp[tempx][tempy][0] != 0:
+                    dp[x][y][0] = dp[tempx][tempy][0]+1
+                if dp[tempx][tempy][1] != 0:
+                    dp[x][y][1] = dp[tempx][tempy][1]+1
+                queue.append([x,y])
+                graph[x][y] = -1
+            if graph[x][y] == '1' and dp[tempx][tempy][1] == 0:
+                dp[x][y][0] = 0
+                dp[x][y][1] = dp[tempx][tempy][0] + 1
+                queue.append([x,y])
+                graph[x][y] = -1
+print(dp)
+if dp[n-1][m-1][0] == 0 and dp[n-1][m-1][1] == 0:
     print(-1)
-    print(graph)
-elif graph[n-1][m-1][0] == '0':
-    print(graph[n-1][m-1][1])
+elif dp[n-1][m-1][0] == 0:
+    print(dp[n-1][m-1][1])
+elif dp[n-1][m-1][1] == 0:
+    print(dp[n-1][m-1][0])
 else:
-    print(graph[n-1][m-1][0])
+    print(min(dp[n-1][m-1][0], dp[n-1][m-1][1]))
